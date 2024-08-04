@@ -72,6 +72,10 @@ export class CalculatorComponent {
 
         break;
 
+      case "<x":
+        this.outputValue = this.outputValue.slice(0, this.outputValue.length - 1);
+        break;
+
       default:
         this.outputValue = "";
         this.historyValue = "";
