@@ -9,4 +9,5 @@ import { Component, Input } from '@angular/core';
 })
 export class CalculatorOutputComponent {
   @Input() value: string = "";
+  @Input() history: string = "";
 }

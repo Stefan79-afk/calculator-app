@@ -1,5 +1,5 @@
 <div class="page">
-    <app-calculator-output [value]="outputValue" class="output-screen" />
+    <app-calculator-output [value]="outputValue" [history]="historyValue" class="output-screen" />
     <div class="calculator">
         @for (item of values; track $index) {
             <app-calculator-button (onButtonPress)="onButtonPressReceive($event)" displayNumber={{item}} />
