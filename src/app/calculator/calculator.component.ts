@@ -57,12 +57,19 @@ export class CalculatorComponent {
 
       case "+/-":
         if(this.outputValue) {
-          if(this.outputValue[0] !== "-") {
+          if(!this.outputValue.startsWith("-")) {
             this.outputValue = "-".concat(this.outputValue);
           } else {
             this.outputValue = this.outputValue.slice(1);
           }
         }
+        break;
+
+      case ".":
+        if(this.outputValue) {
+          this.outputValue = this.outputValue.concat(".");
+        }
+
         break;
 
       default:
