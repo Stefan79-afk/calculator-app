@@ -10,7 +10,7 @@ import { CalculatorOutputComponent } from "../calculator-output/calculator-outpu
   styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-  values = ["%", "CE", "C", "<x", "1/x", "x^2", "sqrt(x)", "/", "7", "8", "9", "x", "4", "5", "6", "-", "1", "2", "3", "+", "+/-", "0", ".", "="];
+  values = ["%", "CE", "C", "<x", "1/x", "x^2", "sqrt(x)", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "+/-", "0", ".", "="];
 
   outputValue = "";
   historyValue = ""
@@ -27,9 +27,16 @@ export class CalculatorComponent {
       case "7":
       case "8":
       case "9":
+      case "0":
+
         if(this.outputValue) {
-          this.outputValue += value;
-        } else {
+          if (value != "0" && this.outputValue.startsWith("0") && this.outputValue.length === 1) {
+            this.outputValue = value;
+          } else {
+            this.outputValue += value;
+          }
+          
+        } else if(!this.outputValue){
           this.outputValue = value;
         }
         break;
@@ -74,6 +81,24 @@ export class CalculatorComponent {
 
       case "<x":
         this.outputValue = this.outputValue.slice(0, this.outputValue.length - 1);
+        break;
+
+      case "+":
+      case "-":
+      case "/":
+      case "*":
+      case "%":
+        if(this.outputValue) {
+          this.historyValue += `${this.outputValue} ${value} `;
+          this.outputValue = "";
+        }
+        break;
+
+      case "=":
+        if(this.historyValue) {
+          this.historyValue += this.outputValue;
+          this.outputValue = eval(this.historyValue);
+        }
         break;
 
       default:
