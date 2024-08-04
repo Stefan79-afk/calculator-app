@@ -1,30 +1,9 @@
 <div class="page">
-    <app-calculator-output class="output-screen" />
+    <app-calculator-output [value]="outputValue" class="output-screen" />
     <div class="calculator">
-        <app-calculator-button displayNumber="%" />
-        <app-calculator-button displayNumber="CE" />
-        <app-calculator-button displayNumber="C" />
-        <app-calculator-button displayNumber="<x" />
-        <app-calculator-button displayNumber="1/x" />
-        <app-calculator-button displayNumber="x^2" />
-        <app-calculator-button displayNumber="sqrt" />
-        <app-calculator-button displayNumber="/" />
-        <app-calculator-button displayNumber="7" />
-        <app-calculator-button displayNumber="8" />
-        <app-calculator-button displayNumber="9" />
-        <app-calculator-button displayNumber="x" />
-        <app-calculator-button displayNumber="4" />
-        <app-calculator-button displayNumber="5" />
-        <app-calculator-button displayNumber="6" />
-        <app-calculator-button displayNumber="-" />
-        <app-calculator-button displayNumber="1" />
-        <app-calculator-button displayNumber="2" />
-        <app-calculator-button displayNumber="3" />
-        <app-calculator-button displayNumber="+" />
-        <app-calculator-button displayNumber="+/-" />
-        <app-calculator-button displayNumber="0" />
-        <app-calculator-button displayNumber="." />
-        <app-calculator-button displayNumber="=" />
+        @for (item of values; track $index) {
+            <app-calculator-button (onButtonPress)="onButtonPressReceive($event)" displayNumber={{item}} />
+        }
     </div>
 </div>
 

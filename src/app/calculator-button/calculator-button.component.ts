@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Input } from '@angular/core';
 
 @Component({
@@ -10,4 +10,9 @@ import { Input } from '@angular/core';
 })
 export class CalculatorButtonComponent {
   @Input() displayNumber: string = '';
+  @Output() onButtonPress: EventEmitter<string> = new EventEmitter<string>();
+
+  onPress(param: any){
+    this.onButtonPress.emit(param.innerText);
+  }
 }

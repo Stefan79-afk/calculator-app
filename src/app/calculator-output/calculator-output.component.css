@@ -4,3 +4,13 @@
     height: 10rem;
     margin-bottom: 0.5rem;
 }
+
+.text {
+    color: white;
+    text-align: right;
+    font-size: 1.5rem;
+}
+
+.text:first-of-type {
+    font-style: italic;
+}
