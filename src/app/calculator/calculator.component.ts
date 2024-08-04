@@ -55,6 +55,16 @@ export class CalculatorComponent {
         }
         break;
 
+      case "+/-":
+        if(this.outputValue) {
+          if(this.outputValue[0] !== "-") {
+            this.outputValue = "-".concat(this.outputValue);
+          } else {
+            this.outputValue = this.outputValue.slice(1);
+          }
+        }
+        break;
+
       default:
         this.outputValue = "";
         this.historyValue = "";
