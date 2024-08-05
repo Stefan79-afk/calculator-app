@@ -10,12 +10,12 @@ import { CalculatorOutputComponent } from "../calculator-output/calculator-outpu
   styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-  values = ["%", "CE", "C", "<x", "1/x", "x^2", "sqrt(x)", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "+/-", "0", ".", "="];
+  values: string[] = ["%", "CE", "C", "<x", "1/x", "x^2", "sqrt(x)", "/", "7", "8", "9", "*", "4", "5", "6", "-", "1", "2", "3", "+", "+/-", "0", ".", "="];
 
-  outputValue = "";
-  historyValue = ""
+  outputValue: string = "";
+  historyValue: string = ""
 
-  onButtonPressReceive(value: string) {
+  onButtonPressReceive(value: string): void {
     switch(value) {
 
       case "1":
@@ -28,48 +28,23 @@ export class CalculatorComponent {
       case "8":
       case "9":
       case "0":
-
-        if(this.outputValue) {
-          if (value != "0" && this.outputValue.startsWith("0") && this.outputValue.length === 1) {
-            this.outputValue = value;
-          } else {
-            this.outputValue += value;
-          }
-          
-        } else if(!this.outputValue){
-          this.outputValue = value;
-        }
+        this.handleNumberPress(value);
         break;
       
       case "1/x":
-        if(this.outputValue) {
-          this.historyValue = `1/${this.outputValue}`;
-          this.outputValue = (1 / Number(this.outputValue)).toString();
-        }
+        this.handleInverseOperation(value);
         break;
       
       case "sqrt(x)":
-        if(this.outputValue) {
-          this.historyValue = `sqrt(${this.outputValue})`;
-          this.outputValue = (Math.sqrt(Number(this.outputValue))).toString();
-        }
+        this.handleSQRTOperation(value);
         break;
 
       case "x^2":
-        if(this.outputValue) {
-          this.historyValue = `${this.outputValue} ^ 2`;
-          this.outputValue = (Math.pow(Number(this.outputValue), 2)).toString();
-        }
+        this.handleSquareOperation(value);
         break;
 
       case "+/-":
-        if(this.outputValue) {
-          if(!this.outputValue.startsWith("-")) {
-            this.outputValue = "-".concat(this.outputValue);
-          } else {
-            this.outputValue = this.outputValue.slice(1);
-          }
-        }
+        this.handleNegationOperation(value);
         break;
 
       case ".":
@@ -88,22 +63,75 @@ export class CalculatorComponent {
       case "/":
       case "*":
       case "%":
-        if(this.outputValue) {
-          this.historyValue += `${this.outputValue} ${value} `;
-          this.outputValue = "";
-        }
+        this.handleBinaryOperation(value);
         break;
 
       case "=":
-        if(this.historyValue) {
-          this.historyValue += this.outputValue;
-          this.outputValue = eval(this.historyValue);
-        }
+        this.handleEqualOperation(value);
         break;
 
       default:
         this.outputValue = "";
         this.historyValue = "";
+    }
+ 
+  }
+
+  handleNumberPress(value: string): void {
+    if(this.outputValue) {
+      if (value != "0" && this.outputValue.startsWith("0") && this.outputValue.length === 1) {
+        this.outputValue = value;
+      } else {
+        this.outputValue += value;
+      }
+      
+    } else if(!this.outputValue){
+      this.outputValue = value;
+    }
+  }
+
+  handleInverseOperation(value: string): void {
+    if(this.outputValue) {
+      this.historyValue = `1/${this.outputValue}`;
+      this.outputValue = (1 / Number(this.outputValue)).toString();
+    }
+  }
+
+  handleSQRTOperation(value: string): void {
+    if(this.outputValue) {
+      this.historyValue = `sqrt(${this.outputValue})`;
+      this.outputValue = (Math.sqrt(Number(this.outputValue))).toString();
+    }
+  }
+
+  handleEqualOperation(value: string): void {
+    if(this.historyValue) {
+      this.historyValue += this.outputValue;
+      this.outputValue = eval(this.historyValue);
+    }
+  }
+
+  handleBinaryOperation(value: string): void {
+    if(this.outputValue) {
+      this.historyValue += `${this.outputValue} ${value} `;
+      this.outputValue = "";
+    }
+  }
+
+  handleNegationOperation(value: string): void {
+    if(this.outputValue) {
+      if(!this.outputValue.startsWith("-")) {
+        this.outputValue = "-".concat(this.outputValue);
+      } else {
+        this.outputValue = this.outputValue.slice(1);
+      }
+    }
+  }
+
+  handleSquareOperation(value: string): void {
+    if(this.outputValue) {
+      this.historyValue = `${this.outputValue} ^ 2`;
+      this.outputValue = (Math.pow(Number(this.outputValue), 2)).toString();
     }
   }
 }
